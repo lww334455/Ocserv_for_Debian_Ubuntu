@@ -364,7 +364,7 @@ function check_Required(){
 #install base-tools 
     print_info "安装基础工具！"
     apt-get update  -qq
-    check_install "curl vim sudo gawk sed insserv nano" "curl vim sudo gawk sed insserv nano"
+    check_install "net-tools curl vim sudo gawk sed insserv nano" "net-tools curl vim sudo gawk sed insserv nano"
     check_install "dig lsb_release" "dnsutils lsb-release"
     insserv -s  > /dev/null 2>&1 || ln -s /usr/lib/insserv/insserv /sbin/insserv
     print_info "基础工具安装成功"
@@ -704,7 +704,16 @@ function tar_lz4_install(){
     else
         ln -sf /usr/local/lib/liblz4.* /usr/lib/i386-linux-gnu/
     fi
-    print_info "[ lz4 ] ok"
+	print_info "[ lz4 ] ok"
+	
+# 检查 net-tools 是否安装
+if ! dpkg -l | grep -q net-tools; then
+    echo "net-tools 未安装net—tools，正在安装..."
+    sudo apt update
+    sudo apt install -y net-tools
+else
+    echo "net-tools 已经安装。"
+fi
 }
 
 #install freeradius-client 1.1.7
@@ -1294,8 +1303,8 @@ function surport_Syscodename(){
     [ "$oc_D_V" = "stretch" ] && return 0
     [ "$oc_D_V" = "trusty" ] && return 0
     [ "$oc_D_V" = "focal" ] && return 0
-    [ "$oc_D_V" = "utopic" ] && return 0
     [ "$oc_D_V" = "noble" ] && return 0
+    [ "$oc_D_V" = "utopic" ] && return 0
     [ "$oc_D_V" = "vivid" ] && return 0
     [ "$oc_D_V" = "wily" ] && return 0
     ocservauto.sh
