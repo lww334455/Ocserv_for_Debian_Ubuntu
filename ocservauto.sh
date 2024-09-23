@@ -125,7 +125,7 @@ net.ipv4.tcp_window_scaling = 1
 net.ipv4.tcp_keepalive_time = 1200
 net.ipv4.tcp_max_syn_backlog = 8192
 net.ipv4.tcp_congestion_control = htcp
-net.ipv4.icmp_echo_ignore_all = 1
+#net.ipv4.icmp_echo_ignore_all = 1
 #net.ipv4.tcp_fastopen = 3
 EOFSYS
     [ -f "/proc/sys/net/ipv4/tcp_fastopen" ] && [ -f /etc/sysctl.conf ] && sed -i 's/#net.ipv4.tcp_fastopen/net.ipv4.tcp_fastopen/g' /etc/sysctl.conf
@@ -1295,6 +1295,7 @@ function surport_Syscodename(){
     [ "$oc_D_V" = "trusty" ] && return 0
     [ "$oc_D_V" = "focal" ] && return 0
     [ "$oc_D_V" = "utopic" ] && return 0
+    [ "$oc_D_V" = "noble" ] && return 0
     [ "$oc_D_V" = "vivid" ] && return 0
     [ "$oc_D_V" = "wily" ] && return 0
     ocservauto.sh
